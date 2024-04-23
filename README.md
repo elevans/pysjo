@@ -1,4 +1,4 @@
-metaview
+pyops
 ===
 
-View image metadata!
+SciJava and Python!
