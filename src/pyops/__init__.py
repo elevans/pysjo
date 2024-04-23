@@ -4,7 +4,7 @@ def init():
     """Initialize a SciJava Ops environment.
     """
     # add SciJava repository
-    sj.config.add_repositories({"scijava.public': 'https://maven.scijava.org/content/groups/public"})
+    sj.config.add_repositories({"scijava.public": "https://maven.scijava.org/content/groups/public"})
 
     # add endpoints
     sj.config.endpoints = ["net.imglib2:imglib2",
