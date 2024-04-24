@@ -7,6 +7,10 @@ class ImgLib2Classes(JavaClasses):
     def ImgUtil(self):
         return "net.imglib2.util.ImgUtil"
 
+    @JavaClasses.java_import
+    def Util(self):
+        return "net.imglib2.util.Util"
+
 class SCIFIOClasses(JavaClasses):
     """Easy access to SCIFIO Java classes.
     """
