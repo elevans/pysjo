@@ -11,11 +11,15 @@ def get_ops():
     return sj.jimport("org.scijava.ops.api.OpEnvironment").build()
 
 
-def init():
+def init(debug: bool=False):
     """Configure the JVM with a local build of the SciJava framework.
     """
     # add SciJava repository
     sj.config.add_repositories({"scijava.public": "https://maven.scijava.org/content/groups/public"})
+
+    # add JVM options
+    if debug:
+        sj.config.add_option("-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8300")
 
     # add endpoints
     sj.config.endpoints = ["net.imglib2:imglib2-imglyb",
