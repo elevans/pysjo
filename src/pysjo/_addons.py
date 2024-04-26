@@ -1,4 +1,4 @@
-from pyops.java import imglib2
+from pysjo.java import imglib2
 from jpype import JImplementationFor
 
 @JImplementationFor("net.imglib2.EuclideanSpace")

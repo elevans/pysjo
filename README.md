@@ -1,7 +1,7 @@
-pyops: Python wrapper for the SciJava Ops framework
+pysjo: Python wrapper for the SciJava Ops framework
 ===
 
-pyops provides easy access to the SciJava Ops framework and helper classes to convert
+pysjo provides easy access to the SciJava Ops framework and helper classes to convert
 between ImgLib2 and NumPy array types.
 
 ## Installation
@@ -9,16 +9,16 @@ between ImgLib2 and NumPy array types.
 With conda:
 
 ```bash
-conda create -n pyops -c conda-forge imglyb scyjava openjdk>=11
+conda create -n pysjo -c conda-forge imglyb scyjava openjdk>=11
 ```
 
 With mamba
 
 ```bash
-mamba create -n pyops imglyb scyjava openjdk>=11
+mamba create -n pysjo imglyb scyjava openjdk>=11
 ```
 
-Clone this repository, navigate to the `pyops` folder and install it with:
+Clone this repository, navigate to the `pysjo` folder and install it with:
 
 ```bash
 pip install -e .
@@ -26,13 +26,13 @@ pip install -e .
 
 ## Usage
 
-To access the Op environment, import `pyops` and use the `get_ops()` method:
+To access the Op environment, import `pysjo` and use the `get_ops()` method:
 
 ```python
-import pyops
+import pysjo
 
 # get an instance of the Op environment
-ops = pyops.get_ops()
+ops = pysjo.get_ops()
 ```
 
 We can check that the Ops environment build was successful by printing the output of `ops.help()`:
@@ -71,8 +71,8 @@ You can also start the JVM configured for the SciJava Ops framework (_i.e._ the 
 without building the Op environment by using the `init()` method instead:
 
 ```python
-import pyops
+import pysjo
 
 # initialize the JVM with SciJava endpoints
-pyops.init()
+pysjo.init()
 ```

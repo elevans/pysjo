@@ -1,6 +1,6 @@
 import imglyb
 import numpy as np
-from pyops.java import imglib2
+from pysjo.java import imglib2
 
 def imglib_to_numpy(rai: "net.imglib2.RandomAccessibleInterval", dtype="float64") -> np.ndarray:
     """Convert an ImgLib2 RandomAccessibleInterval to NumPy array.

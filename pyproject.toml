@@ -3,7 +3,7 @@ requires = [ "setuptools>=61.2" ]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyops"
+name = "pysjo"
 version = "0.0.1.dev0"
 description = "Python wrapper for the SciJava Ops framework"
 license = {text = "Apache-2.0"}

@@ -1,4 +1,4 @@
-name: pyops
+name: pysjo
 channels:
   - conda-forge
   - defaults

@@ -1,5 +1,5 @@
 import scyjava as sj
-import pyops._addons
+import pysjo._addons
 from typing import Sequence
 
 def get_ops():
