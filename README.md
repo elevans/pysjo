@@ -1,20 +1,21 @@
 pyops: Python wrapper for the SciJava Ops framework
 ===
 
-pyops provides easy access to the SciJava Ops framework.
+pyops provides easy access to the SciJava Ops framework and helper classes to convert
+between ImgLib2 and NumPy array types.
 
 ## Installation
 
 With conda:
 
 ```bash
-conda create -n pyops -c conda-forge imglyb scyjava openjdk>=17
+conda create -n pyops -c conda-forge imglyb scyjava openjdk>=11
 ```
 
 With mamba
 
 ```bash
-mamba create -n pyops imglyb scyjava openjdk>=17
+mamba create -n pyops imglyb scyjava openjdk>=11
 ```
 
 Clone this repository, navigate to the `pyops` folder and install it with:
@@ -45,10 +46,7 @@ We can check that the Ops environment build was successful by printing the outpu
 	> create
 	> deconvolve
 	> expression
-	> features.haralick
 	> features
-	> features.tamura
-	> features.zernike
 	> filter
 	> flim
 	> geom

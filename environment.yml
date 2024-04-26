@@ -6,4 +6,4 @@ dependencies:
   - python >= 3.8
   - scyjava >= 1.9.1
   - imglyb >= 2.1.0
-  - openjdk >= 17
+  - openjdk >= 11
