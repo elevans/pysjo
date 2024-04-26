@@ -23,3 +23,16 @@ def open_as_numpy(path: str):
     opener = scifio.ImgOpener()
 
     return convert.imglib_to_numpy(opener.openImg(path))
+
+
+def save(path:str, image):
+    """Save an image with SCIFIO.
+    """
+    if not sj.jvm_started():
+        pyops.init()
+
+    if not sj.isjava(image):
+        image = convert.numpy_to_imglib(image)
+
+    saver = scifio.ImgSaver()
+    saver.saveImg(path, image)

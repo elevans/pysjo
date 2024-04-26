@@ -56,5 +56,9 @@ class SCIFIOClasses(JavaClasses):
     def ImgOpener(self):
         return "io.scif.img.ImgOpener"
 
+    @JavaClasses.java_import
+    def ImgSaver(self):
+        return "io.scif.img.ImgSaver"
+
 imglib2 = ImgLib2Classes()
 scifio = SCIFIOClasses()
