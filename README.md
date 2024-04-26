@@ -26,6 +26,7 @@ pip install -e .
 
 ## Usage
 
+### Initialize SciJava Ops
 To access the Op environment, import `pysjo` and use the `get_ops()` method:
 
 ```python
@@ -75,4 +76,51 @@ import pysjo
 
 # initialize the JVM with SciJava endpoints
 pysjo.init()
+```
+
+### Opening and saving images
+
+Images can be opened and saved using the `pysjo.io` module (backed by SCIFIO): 
+
+```python
+import pysjo.io as io
+
+# open data as Img
+img = io.open_as_img("/path/to/data.tif")
+
+# open data as NumPy
+narr = io.open_as_numpy("/path/to/data/tif")
+```
+
+### Converting between ImgLib2 and NumPy images
+
+Images can be converted between ImgLib2 (_i.e._ `net.imglib2.RandomAccessibleInterval`) and
+NumPy (_i.e._ `numpy.ndarray`) with the `pysjo.convert` module:
+
+```python
+import pysjo.convert as convert
+
+# convert an Img to a NumPy array
+narr = convert.imglib_to_numpy(img)
+
+# convert a NumPy array to an Img/RAI
+img = convert.numpy_to_imglib(narr)
+```
+
+### Accessing ImgLib2 and SciJava classes
+
+Commonly used Java classes for ImgLib2, SCIFIO and other related projects
+can be accessed through the `pysjo.java` module:
+
+```python
+from pysjo.java import imglib2, scifio
+
+# access ImgLib2
+imglib2.ComplexFloatType
+imglib2.DoubleType
+imglib2.Img
+
+# access scifio
+scifio.ImgOpener
+scifio.ImgSaver
 ```
