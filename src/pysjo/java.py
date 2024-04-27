@@ -60,5 +60,13 @@ class SCIFIOClasses(JavaClasses):
     def ImgSaver(self):
         return "io.scif.img.ImgSaver"
 
+class SciJavaClasses(JavaClasses):
+    """Easy access to SciJava Java classes.
+    """
+    @JavaClasses.java_import
+    def OpEnvironment(self):
+        return "org.scijava.ops.api.OpEnvironment"
+
 imglib2 = ImgLib2Classes()
 scifio = SCIFIOClasses()
+scijava = SciJavaClasses()
