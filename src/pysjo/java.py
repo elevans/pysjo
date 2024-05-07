@@ -1,8 +1,9 @@
 from scyjava import JavaClasses
 
+
 class ImgLib2Classes(JavaClasses):
-    """Easy access to ImgLib2 Java classes.
-    """
+    """Easy access to ImgLib2 Java classes."""
+
     # imglib2 numeric types
     @JavaClasses.java_import
     def BitType(self):
@@ -49,9 +50,10 @@ class ImgLib2Classes(JavaClasses):
     def Util(self):
         return "net.imglib2.util.Util"
 
+
 class SCIFIOClasses(JavaClasses):
-    """Easy access to SCIFIO Java classes.
-    """
+    """Easy access to SCIFIO Java classes."""
+
     @JavaClasses.java_import
     def ImgOpener(self):
         return "io.scif.img.ImgOpener"
@@ -60,12 +62,18 @@ class SCIFIOClasses(JavaClasses):
     def ImgSaver(self):
         return "io.scif.img.ImgSaver"
 
+
 class SciJavaClasses(JavaClasses):
-    """Easy access to SciJava Java classes.
-    """
+    """Easy access to SciJava Java classes."""
+
+    @JavaClasses.java_import
+    def OpEnvironment(self):
+        return "org.scijava.ops.api.OpBuilder"
+
     @JavaClasses.java_import
     def OpEnvironment(self):
         return "org.scijava.ops.api.OpEnvironment"
+
 
 imglib2 = ImgLib2Classes()
 scifio = SCIFIOClasses()
