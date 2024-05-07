@@ -1,5 +1,7 @@
-from pysjo.java import imglib2
 from jpype import JImplementationFor
+
+from pysjo.java import imglib2
+
 
 @JImplementationFor("net.imglib2.EuclideanSpace")
 class EuclideanSpaceAddons(object):
@@ -11,6 +13,7 @@ class EuclideanSpaceAddons(object):
         """
         return self.numDimensions()
 
+
 @JImplementationFor("net.imglib2.Interval")
 class IntervalAddons(object):
     @property
@@ -21,6 +24,7 @@ class IntervalAddons(object):
         """
         return tuple(self.dimension(d) for d in range(self.numDimensions()))
 
+
 @JImplementationFor("net.imglib2.RandomAccessibleInterval")
 class RAIAddons(object):
     @property
@@ -30,4 +34,3 @@ class RAIAddons(object):
         :return: dtype of the RandomAccessibleInterval
         """
         return type(imglib2.Util.getTypeFromInterval(self))
-

@@ -1,8 +1,12 @@
 import imglyb
 import numpy as np
+
 from pysjo.java import imglib2
 
-def imglib_to_numpy(rai: "net.imglib2.RandomAccessibleInterval", dtype="float64") -> np.ndarray:
+
+def imglib_to_numpy(
+    rai: "net.imglib2.RandomAccessibleInterval", dtype="float64"
+) -> np.ndarray:
     """Convert an ImgLib2 RandomAccessibleInterval to NumPy array.
 
     :param rai: Input RandomAccessibleInterval (RAI)
@@ -11,7 +15,7 @@ def imglib_to_numpy(rai: "net.imglib2.RandomAccessibleInterval", dtype="float64"
     """
     # create empty NumPy array
     shape = list(rai.dimensionsAsLongArray())
-    shape.reverse() # XY -> row, col
+    shape.reverse()  # XY -> row, col
     narr = np.zeros(shape, dtype=dtype)
 
     # create RAI reference with imglyb and compy data
