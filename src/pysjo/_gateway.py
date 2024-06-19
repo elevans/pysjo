@@ -28,13 +28,6 @@ class OpNamespace:
         self._env = env
         self._ns = ns
 
-    def help(self, op_name: str = None):
-        """ """
-        if op_name:
-            print(self._env.help(op_name), sep="\n")
-        else:
-            print(self._env.help(), sep="\n")
-
 
 class OpsGateway(OpNamespace):
     """SciJava Ops Gateway class.
@@ -45,6 +38,21 @@ class OpsGateway(OpNamespace):
 
     def __init__(self, env):
         super().__init__(env, "global")
+
+    def help(self, op_name: str = None):
+        """ """
+        if op_name:
+            print(self._env.help(op_name), sep="\n")
+        else:
+            print(self._env.help(), sep="\n")
+
+    def helpVerbose(self, op_name: str = None):
+        """
+        """
+        if op_name:
+            print(self._env.helpVerbose(op_name), sep="\n")
+        else:
+            print(self._env_helpVerbose(), sep="\n")
 
 
 def init_ops_gateway() -> OpsGateway:
