@@ -1,5 +1,5 @@
 from types import MethodType
-from typing import Sequence
+from typing import List, Sequence
 
 import scyjava as sj
 
@@ -10,9 +10,9 @@ sjo_endpoints = [
     "net.imglib2:imglib2",
     "net.imglib2:imglib2-imglyb",
     "io.scif:scifio",
-    "org.scijava:scijava-ops-engine:0-SNAPSHOT",
-    "org.scijava:scijava-ops-flim:0-SNAPSHOT",
-    "org.scijava:scijava-ops-image:0-SNAPSHOT",
+    "org.scijava:scijava-ops-engine:1.0.0",
+    "org.scijava:scijava-ops-flim:1.0.0",
+    "org.scijava:scijava-ops-image:1.0.0",
 ]
 
 
@@ -47,7 +47,7 @@ class OpsGateway(OpNamespace):
         super().__init__(env, "global")
 
 
-def get_ops_gateway() -> OpsGateway:
+def init_ops_gateway() -> OpsGateway:
     """Get the SciJava Ops Gateway.
 
     Initialize the JVM and return an instance of the
@@ -56,24 +56,49 @@ def get_ops_gateway() -> OpsGateway:
     :return: The SciJava Ops Gateway.
     """
     if not sj.jvm_started():
-        init()
+        _init_jvm()
 
-    # build Ops environment and populate the gateway
+    # build Ops environment
     env = scijava.OpEnvironment.build()
+
+    # find op names, base namespaces and intermediate namespaces
     op_names = _find_op_names(env)
+    op_base_ns = []
     for op in op_names:
-        dot = op.find(".")
-        if dot >= 0:
-            ns = op[:dot]
-            name = op[dot + 1 :]
-            _add_namespace(OpsGateway, env, ns, name)
+        op_sig = op.split(".")
+        # skip "base" Ops
+        if len(op_sig) == 1:
+            continue
         else:
-            _add_op(OpsGateway, env, op)
+            op_base_ns.append(op_sig[0])
+    op_base_ns = set(op_base_ns)
+
+    # populate base namespaces
+    for ns in op_base_ns:
+        _add_namespace(OpsGateway, env, ns)
+
+    # populate nested namespaces and ops
+    for op in op_names:
+        op_sig = op.split(".")
+        sig_size = len(op_sig)
+        if sig_size > 1:
+            # find/add nested namespaces
+            gateway_ref = OpsGateway  # used to reference nested namespaces
+            for s in op_sig[:-1]:
+                if hasattr(gateway_ref, s):
+                    gateway_ref = getattr(gateway_ref, s)
+                else:
+                    _add_namespace(gateway_ref, env, s)
+                    gateway_ref = getattr(gateway_ref, s)
+            # add the Op to the nested namespace
+            _add_op(gateway_ref, env, op_sig[-1])
+        else:
+            _add_op(OpsGateway, env, op_sig[0])
 
     return OpsGateway(env)
 
 
-def init(endpoints: Sequence[str] = None):
+def _init_jvm(endpoints: Sequence[str] = None):
     """Configure and start the JVM with SciJava Ops
 
     :param endpoints: A list or tuple of endpoint strings
@@ -93,7 +118,7 @@ def init(endpoints: Sequence[str] = None):
     sj.start_jvm()
 
 
-def _add_namespace(gc: OpsGateway, env: "scijava.OpEnvironment", ns: str, on: str):
+def _add_namespace(gc: OpsGateway, env: "scijava.OpEnvironment", ns: str):
     """Add an Op and it's namespace to the OpsGateway.
 
     Helper method to add an Op call with the appropriate nested
@@ -106,7 +131,6 @@ def _add_namespace(gc: OpsGateway, env: "scijava.OpEnvironment", ns: str, on: st
     """
     if not hasattr(gc, ns):
         setattr(gc, ns, OpNamespace(env, ns))
-    _add_op(getattr(gc, ns), env, on)
 
 
 def _add_op(gc: OpsGateway, env: "scijava.OpEnvironment", on: str):
