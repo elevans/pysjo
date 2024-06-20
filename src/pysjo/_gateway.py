@@ -1,9 +1,11 @@
 from types import MethodType
 from typing import List, Sequence
 
+import os
 import scyjava as sj
 
 from pysjo.java import scijava
+from pysjo._endpoints import base_endpoints, all_endpoints
 
 # default SciJava Ops endpoints
 sjo_endpoints = [
@@ -111,21 +113,22 @@ def init_ops_gateway() -> OpsGateway:
     return OpsGateway(env)
 
 
-def _init_jvm(endpoints: Sequence[str] = None):
+def _init_jvm(dir_or_endpoint: Sequence[str] = None):
     """Configure and start the JVM with SciJava Ops
 
     :param endpoints: A list or tuple of endpoint strings
     """
-    # add SciJava repository
-    sj.config.add_repositories(
-        {"scijava.public": "https://maven.scijava.org/content/groups/public"}
-    )
-
-    # add endpoints
-    if not endpoints:
-        sj.config.endpoints = sjo_endpoints
-    else:
-        sj.config.endpoints = endpoints
+    if dir_or_endpoint is None:
+        # config with default endpoints
+        sj.config.endpoint = base_endpoints + all_endpoints
+    elif isinstance(dir_or_endpoint, str):
+        # append the base list
+    elif isinstance(dir_or_endpoint, List):
+        # config with base and given endpoints
+        sj.config.endpoint = base_endpoints + dir_or_endpoint
+    elif os.path.isdir(os.path.expanduser(dir_or_endpoint)):
+        path = os.path.abspath(os.path.expanduser(dir_or_endpoint))
+        # find jards and replace endpoints with this
 
     # start the JVM
     sj.start_jvm()
