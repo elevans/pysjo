@@ -1,11 +1,11 @@
 import imglyb
 import numpy as np
 
-from pysjo.java import imglib2
+from pysjo.java import imglib
 
 
 def imglib_to_numpy(
-    rai: "net.imglib2.RandomAccessibleInterval", dtype="float64"
+    rai: "imglib.RandomAccessibleInterval", dtype="float64"
 ) -> np.ndarray:
     """Convert an ImgLib2 RandomAccessibleInterval to NumPy array.
 
@@ -19,12 +19,12 @@ def imglib_to_numpy(
     narr = np.zeros(shape, dtype=dtype)
 
     # create RAI reference with imglyb and compy data
-    imglib2.ImgUtil.copy(rai, imglyb.to_imglib(narr))
+    imglib.ImgUtil.copy(rai, imglyb.to_imglib(narr))
 
     return narr
 
 
-def mesh_to_ndarray(mesh) -> Poly3DCollection:
+def mesh_to_ndarray(mesh) -> np.ndarray:
     """Convert an imglib2 mesh into a numpy array of trianges.
 
     :param mesh: An imglib mesh
@@ -41,7 +41,7 @@ def mesh_to_ndarray(mesh) -> Poly3DCollection:
     return np.array(tris)
 
 
-def numpy_to_imglib(narr: np.ndarray) -> "net.imglib2.RandomAccessibleInterval":
+def numpy_to_imglib(narr: np.ndarray) -> "imglib.RandomAccessibleInterval":
     """Convert a NumPy image to an ImgLib2 RandomAccessibleInterval.
 
     :param narr: Input NumPy array

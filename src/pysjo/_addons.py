@@ -1,6 +1,6 @@
 from jpype import JImplementationFor
 
-from pysjo.java import imglib2
+from pysjo.java import imglib
 
 
 @JImplementationFor("net.imglib2.EuclideanSpace")
@@ -33,4 +33,4 @@ class RAIAddons(object):
 
         :return: dtype of the RandomAccessibleInterval
         """
-        return type(imglib2.Util.getTypeFromInterval(self))
+        return type(imglib.Util.getTypeFromInterval(self))

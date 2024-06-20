@@ -1,10 +1,15 @@
 from scyjava import JavaClasses
 
 
-class ImgLib2Classes(JavaClasses):
-    """Easy access to ImgLib2 Java classes."""
+class ImgLibClasses(JavaClasses):
+    """Easy access to ImgLib Java classes."""
 
-    # imglib2 numeric types
+    # imglib2 base classes
+    @JavaClasses.java_import
+    def RandomAccessibleInterval(self):
+        return "net.imglib2.RandomAccessibleInterval"
+
+    # imglib2 numeric type classes
     @JavaClasses.java_import
     def BitType(self):
         return "net.imglib2.type.logic.BitType"
@@ -75,6 +80,6 @@ class SciJavaClasses(JavaClasses):
         return "org.scijava.ops.api.OpEnvironment"
 
 
-imglib2 = ImgLib2Classes()
+imglib = ImgLibClasses()
 scifio = SCIFIOClasses()
 scijava = SciJavaClasses()
