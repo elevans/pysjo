@@ -1,14 +1,14 @@
 import scyjava as sj
 
-import pysjo
 import pysjo.convert as convert
+import pysjo._gateway as gateway
 from pysjo.java import scifio
 
 
 def open_as_img(path: str):
     """Open an image with SCIFIO as an ImgLib2 Img,"""
     if not sj.jvm_started():
-        pysjo.init()
+        gateway._init_jvm()
 
     opener = scifio.ImgOpener()
 
@@ -18,7 +18,7 @@ def open_as_img(path: str):
 def open_as_numpy(path: str):
     """Open an imag with SCIFIO as a NumPy array,"""
     if not sj.jvm_started():
-        pysjo.init()
+        gateway._init_jvm()
 
     opener = scifio.ImgOpener()
 
@@ -28,7 +28,7 @@ def open_as_numpy(path: str):
 def save(path: str, image):
     """Save an image with SCIFIO."""
     if not sj.jvm_started():
-        pysjo.init()
+        gateway._init_jvm()
 
     if not sj.isjava(image):
         image = convert.numpy_to_imglib(image)
