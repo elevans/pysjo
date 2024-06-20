@@ -40,14 +40,19 @@ class OpsGateway(OpNamespace):
         super().__init__(env, "global")
 
     def help(self, op_name: str = None):
-        """ """
+        """SciJava Ops help.
+
+        :param op_name: Namespace and Op name (e.g. "filter.gauss")
+        """
         if op_name:
             print(self._env.help(op_name), sep="\n")
         else:
             print(self._env.help(), sep="\n")
 
     def helpVerbose(self, op_name: str = None):
-        """
+        """SciJava Ops verbose help.
+
+        :param op_name: Namespace and Op name (e.g. "filter.gauss")
         """
         if op_name:
             print(self._env.helpVerbose(op_name), sep="\n")
