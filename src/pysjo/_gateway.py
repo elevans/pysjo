@@ -7,16 +7,6 @@ import scyjava as sj
 from pysjo.java import scijava
 from pysjo._endpoints import base_endpoints, all_endpoints
 
-# default SciJava Ops endpoints
-sjo_endpoints = [
-    "net.imglib2:imglib2",
-    "net.imglib2:imglib2-imglyb",
-    "io.scif:scifio",
-    "org.scijava:scijava-ops-engine:1.0.0",
-    "org.scijava:scijava-ops-flim:1.0.0",
-    "org.scijava:scijava-ops-image:1.0.0",
-]
-
 
 class OpNamespace:
     """Op namespace class.
@@ -62,7 +52,7 @@ class OpsGateway(OpNamespace):
             print(self._env_helpVerbose(), sep="\n")
 
 
-def init_ops_gateway() -> OpsGateway:
+def init_ops_gateway(dir_or_endpoint) -> OpsGateway:
     """Get the SciJava Ops Gateway.
 
     Initialize the JVM and return an instance of the
@@ -71,7 +61,7 @@ def init_ops_gateway() -> OpsGateway:
     :return: The SciJava Ops Gateway.
     """
     if not sj.jvm_started():
-        _init_jvm()
+        _init_jvm(dir_or_endpoint)
 
     # build Ops environment
     env = scijava.OpEnvironment.build()
@@ -113,22 +103,26 @@ def init_ops_gateway() -> OpsGateway:
     return OpsGateway(env)
 
 
-def _init_jvm(dir_or_endpoint: Sequence[str] = None):
+def _init_jvm(dir_or_endpoint = None):
     """Configure and start the JVM with SciJava Ops
 
     :param endpoints: A list or tuple of endpoint strings
     """
     if dir_or_endpoint is None:
         # config with default endpoints
-        sj.config.endpoint = base_endpoints + all_endpoints
+        sj.config.endpoints = base_endpoints + all_endpoints
+    elif os.path.isdir(os.path.expanduser(dir_or_endpoint)):
+        # config with local jars
+        jars = []
+        jars.extend(sj.config.find_jars(dir_or_endpoint))
+        path = os.path.abspath(os.path.expanduser(dir_or_endpoint))
+        sj.config.add_classpath(os.pathsep.join(jars))
     elif isinstance(dir_or_endpoint, str):
         # append the base list
+        sj.config.endpoints = base_endpoints.append(dir_or_endpoint)
     elif isinstance(dir_or_endpoint, List):
         # config with base and given endpoints
-        sj.config.endpoint = base_endpoints + dir_or_endpoint
-    elif os.path.isdir(os.path.expanduser(dir_or_endpoint)):
-        path = os.path.abspath(os.path.expanduser(dir_or_endpoint))
-        # find jards and replace endpoints with this
+        sj.config.endpoints = base_endpoints + dir_or_endpoint
 
     # start the JVM
     sj.start_jvm()
