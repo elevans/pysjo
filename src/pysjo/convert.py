@@ -24,21 +24,20 @@ def imglib_to_numpy(
     return narr
 
 
-def mesh_to_ndarray(mesh) -> np.ndarray:
+def mesh_to_ndarray(mesh: "imglib.Mesh") -> np.ndarray:
     """Convert an imglib2 mesh into a numpy array of trianges.
 
-    :param mesh: An imglib mesh
-    :return: A NumPy array of triangle vertices
+    :param mesh: An imglib2 Mesh
+    :return: A NumPy array of triangles
     """
-    imglib_tris = mesh.triangles()
-    tris = []
-    for t in imglib_tris:
+    tri_verts = []
+    for t in mesh.triangles():
         verts = ((t.v0xf(), t.v0yf(), t.v0zf()),
                  (t.v1xf(), t.v1yf(), t.v1zf()),
                  (t.v2xf(), t.v2yf(), t.v2zf()))
-        tris.append(np.array(verts))
+        tri_verts.append(np.array(verts))
 
-    return np.array(tris)
+    return np.array(tri_verts)
 
 
 def numpy_to_imglib(narr: np.ndarray) -> "imglib.RandomAccessibleInterval":

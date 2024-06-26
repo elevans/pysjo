@@ -46,6 +46,11 @@ class ImgLibClasses(JavaClasses):
     def UnsignedShortType(self):
         return "net.imglib2.type.numeric.integer.UnsignedShortType"
 
+    # imglib2 mesh classes
+    @JavaClasses.java_import
+    def Mesh(self):
+        return "net.imglib2.mesh.Mesh"
+
     # imglib2 utility classes
     @JavaClasses.java_import
     def ImgUtil(self):
