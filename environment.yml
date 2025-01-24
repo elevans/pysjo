@@ -1,7 +1,6 @@
 name: pysjo
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - python >= 3.8
   - scyjava >= 1.9.1
